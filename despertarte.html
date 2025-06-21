@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jogo AR no Museu</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+      canvas {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <a-scene embedded arjs>
+      <!-- Definindo o marcador de AR -->
+      <a-marker preset="hiro">
+        <!-- Definindo o objeto interativo (um cubo aqui como exemplo) -->
+        <a-box position="0 0.5 0" material="color: blue;"></a-box>
+
+        <!-- Texto que será exibido ao acertar a charada -->
+        <a-text id="charada" position="0 1 0" value="Qual é o objeto mais pesado do mundo?" color="black" scale="5 5 5"></a-text>
+      </a-marker>
+
+      <!-- Câmera para capturar o ambiente -->
+      <a-entity camera></a-entity>
+    </a-scene>
+
+    <script>
+      // Função para alterar a charada e objeto após a resposta
+      function resolveCharada() {
+        // Alterando a cor do cubo
+        const box = document.querySelector("a-box");
+        box.setAttribute("material", "color", "green");
+
+        // Alterando o texto da charada
+        const charada = document.getElementById("charada");
+        charada.setAttribute("value", "Resposta correta! Você ganhou uma peça!");
+
+        // Adicionar animação ou efeito visual
+        box.setAttribute("animation", {
+          property: "rotation",
+          to: "0 360 0",
+          dur: 2000,
+          loop: "true",
+        });
+      }
+
+      // Simulando a resposta correta do jogador
+      setTimeout(resolveCharada, 5000); // Responde após 5 segundos como exemplo
+    </script>
+  </body>
+</html>
